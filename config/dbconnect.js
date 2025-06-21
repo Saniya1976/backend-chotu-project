@@ -1,9 +1,16 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/backend-practice')
-  .then(() => {
-    console.log('MongoDB connected!');
-  })
-  .catch(err => {
-    console.error('MongoDB connection error:', err);
-  });
+const connectDB = async () => {
+  try {
+    await mongoose.connect('mongodb://127.0.0.1:27017/backend-project', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('MongoDB Connected ✅');
+  } catch (error) {
+    console.error('❌ MongoDB connection failed:', error);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;
