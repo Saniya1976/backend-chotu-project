@@ -19,7 +19,7 @@
         }
 
         .success-container {
-            min-height: 100vh;
+            min-height: 80vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -463,9 +463,7 @@
                 <p class="success-message">
                     Your account has been created successfully
                 </p>
-                <p class="user-email">
-                    Confirmation sent to <strong id="email">email</strong>
-                </p>
+              
             </div>
 
             <div class="success-features">
@@ -514,11 +512,7 @@
 
     <script>
         // Get user email from URL parameters or localStorage
-        function getUserEmail() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const email = urlParams.get('email') || localStorage.getItem('email') || 'user@example.com';
-            return email;
-        }
+       
 
         // Set user email on page load
         document.addEventListener('DOMContentLoaded', function() {
@@ -538,7 +532,7 @@
             // Simulate redirect after animation
             setTimeout(() => {
                 // In a real app, this would redirect to the main Pinterest feed
-                alert('Welcome to Pinterest! 🎉\nYou would now be redirected to your personalized feed.');
+                window.location.href = 'index.html';
             }, 1000);
         }
 
@@ -547,8 +541,7 @@
             showClickEffect('Opening profile setup...');
             
             setTimeout(() => {
-                // In a real app, this would redirect to profile completion
-                alert('Profile Setup 👤\nYou would now be redirected to complete your profile.');
+                window.location.href = 'index.html';
             }, 1000);
         }
 

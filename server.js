@@ -1,21 +1,42 @@
 const express = require('express');
 const server = express();
-const User = require('./models/users.js'); // Assuming you have a user model
-const connectDB=require('./config/dbconnect');
-server.use(express.json(), express.urlencoded({ extended: true }));
-server.set('view engine','ejs');
-server.set('views','./views');
+const dotenv = require('dotenv');
+const morgan = require('morgan');
+const connectDB = require('./config/dbconnect');
+const cookieParser = require('cookie-parser');
+
+// Load environment variables
+dotenv.config();
+
+// Middleware
+
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
+server.use(morgan('dev'));
+server.use(cookieParser());
+
+// View engine setup
+server.set('view engine', 'ejs');
+server.set('views', './views');
+
+// Connect to MongoDB
 connectDB();
 
-// Define root route here:
+// Routes
 server.get('/', (req, res) => {
-  res.render('register');
+  res.render('register'); // default register page
 });
 
-//  Mount your user routes here:
-const userRoutes = require('./routes/user.routes.js');
+const userRoutes = require('./routes/user.routes');
 server.use('/users', userRoutes);
+
+server.use((req, res) => {
+  res.status(404).render('404'); // create views/404.ejs for a better user experience
+});
+
+
+// Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
